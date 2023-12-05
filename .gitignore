@@ -4,3 +4,8 @@ work_tables/
 eeg_files_test.txt
 eeg_files.txt
 SauronData.h5
+SauronData_ECG_231122.h5
+test
+SauronData/
+venv/
+tables_with_relative_time/
