@@ -1,9 +1,11 @@
 import mat73
-from datetime import datetime
+from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
 import os 
 import tqdm 
+import h5py
+
 # Combine date and time into a datetime object
 def get_time_from_filename(filename):
     # filename in format blabla_y,m,d_h,m,s.mat
@@ -37,8 +39,7 @@ def select_channels(data,available_channels,desired_channels):
     elif 'EKG' in available_channels:
         ecg_data = data[available_channels.index('EKG'),:]
     else:
-        print('no EKG DATA')
-        print('available: data: '+available_channels)
+        ecg_data = np.empty(1,data.shape[1])
     data = np.vstack([eeg_data,ecg_data])
     return data
 
@@ -63,45 +64,55 @@ def load_signal_and_data(path_file):
 
     return data,Fs,channels
 
+def save_events(data,HashFolderName,startTime,eventTimes,windowsize,desired_channels,available_channels,path_save):
+    for eventTime in tqdm.tqdm(eventTimes,leave=False):
+            signal = select_time_snippet(data=data,startTime=startTime,eventTime=eventTime,windowsize=windowsize,Fs=Fs)
+            signal = select_channels(data=signal,desired_channels=desired_channels,available_channels=available_channels)
+            name = HashFolderName.split('_')[0]+'_'+datetime.strftime(eventTime,'%Y%m%d_%H%M%S')
+            # hf.create_dataset(name=name,data=signal,dtype='f4',compression='gzip')
+            np.save(os.path.join(path_save,name+'.npy'),signal)
+
 if __name__ == '__main__':
     print('loading dataframes')
     # load table with event data
-    df_event = pd.read_excel('tables/batch1.xlsx')
+    df_event = pd.read_excel('tables/batch2.xlsx')
     df_event = df_event.rename({'file':'HashFolderName','time':'eventTime'},axis=1)
     
     # load and extract starttime
-    df_eeg = pd.read_csv('work_tables/EEGs_And_Reports_20231024.csv')[['HashFolderName','SiteID','SessionID_new','EEGFolder']]
-    df_eeg['startTime'] = df_eeg.HashFolderName.apply(get_time_from_filename)
-    df_eeg = df_eeg.drop_duplicates('HashFolderName')
+    # df_eeg = pd.read_csv('tables/EEGs_And_Reports_20231024.csv')[['HashFolderName','SiteID','SessionID_new','EEGFolder']]
+    # df_eeg['startTime'] = df_eeg.HashFolderName.apply(get_time_from_filename)
+    # df_eeg = df_eeg.drop_duplicates('HashFolderName')
 
-    # set some parameters
+    df_bids = pd.read_csv('tables/BIDS_EEG_MGB_Deidentified_Lookup_5thDecember.csv')
+    df_bids['startTime']=df_bids.HashFolderName.apply(get_time_from_filename)
+    # set some parametersf
     # root folder of eeg files 
-    root = 'bdsp/opendata/EEG/data/'
+    root = 'bdsp/opendata/EEG/bids'
     # windowsize of extracted window
     windowsize = 15
     # channels to extract
     desired_channels= ['Fp1','F3','C3','P3','F7','T3','T5','O1','Fz','Cz','Pz','Fp2','F4','C4','P4','F8','T4','T6','O2']
-                  
+    hf = h5py.File('SauronData.h5', 'w')
+        
+    
     print('starting file extraction')
-    for HashFolderName in tqdm.tqdm(df_event.HashFolderName.unique()[3:]):
+    for HashFolderName in tqdm.tqdm(df_event.HashFolderName.unique()[:1]):
+        HashFolder = df_event.HashFolderName.unique()[1]
+        BidsFolder,ses_id = df_bids.loc[df_bids.HashFolderName==HashFolder,['BidsFolder',"SessionID"]].iloc[0]
 
-        # get info from eeg singnal and load data
-        eeg_info = df_eeg[df_eeg.HashFolderName==HashFolderName].iloc[0]
-        SiteID, EEGFolder,HashFolderName,startTime = eeg_info.SiteID,eeg_info.EEGFolder,eeg_info.HashFolderName,eeg_info.startTime
-        eeg_path = generate_EEG_path(root,SiteID,EEGFolder,HashFolderName,startTime,index=0)
-        print('loading data')
-        data,Fs,available_channels = load_signal_and_data(eeg_path)    
-        for eventTime in df_event[df_event.HashFolderName == HashFolderName]['eventTime']:
-            # there is a bug with some files, so that their times are wrong
-            if (eventTime-startTime).total_seconds()>1000000:
-                continue
-            # some files are cut in half after 12h, so a seperate file needs to be loaded!
-            if (eventTime-startTime).total_seconds()>data.shape[1]/Fs:
-                startTime = startTime+timedelta(hours=12)
-                eeg_path = generate_EEG_path(root,SiteID,EEGFolder,HashFolderName,startTime,index=1)
-                data,Fs,available_channels = load_signal_and_data(eeg_path)
+        eventTimes = df_event[df_event.HashFolderName == HashFolderName]['eventTime'].unique()
+        saveTimes = eventTimes[(startTime<eventTimes)&(eventTimes<startTime+timedelta(hours=12))] 
             
-            signal = select_time_snippet(data=data,startTime=startTime,eventTime=eventTime,windowsize=windowsize,Fs=Fs)
-            signal = select_channels(data=signal,desired_channels=desired_channels,available_channels=channels)
-            name = HashFolderName.split('_')[0]+'_'+datetime.strftime(eventTime,'%Y%m%d_%H%M%S')
-            
+        if eventTimes.max()-startTime>timedelta(hours=1000):
+            print('false file! '+eeg_path)
+            continue
+
+        k=0
+        while len(saveTimes)>0:
+            # save all eventtimes in between 
+            eeg_path = generate_EEG_path(root,SiteID,EEGFolder,HashFolderName,startTime,index=k)
+            k+=1
+            data,Fs,available_channels = load_signal_and_data(eeg_path)
+            save_events(data,HashFolderName,startTime,saveTimes,windowsize,desired_channels,available_channels,path_save='test/')
+            startTime = startTime+timedelta(hours=12)
+            saveTimes = eventTimes[(startTime<eventTimes)&(eventTimes<startTime+timedelta(hours=12))] 

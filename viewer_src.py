@@ -74,12 +74,12 @@ class init_montage_module:
         self.idx = (self.idx+1)%(len(self.montages))
         self.montage = self.montages[self.idx]
 
-def change_montage(viewer_module,montage_module):
+def change_montage(ax,viewer_module,montage_module):
     montage_module.next_montage()
     y_locations, y_labels = montage_module.montage.y_locations, montage_module.montage.y_labels
 
     viewer_module.y_locations = y_locations
-    viewer_module.ax.set_yticks(y_locations,y_labels)
+    ax.set_yticks(y_locations,y_labels)
 
 class init_scaling_module():
     def __init__(self,scaling_factor=1):
@@ -105,36 +105,40 @@ class init_title_module():
         self.idx-=1
         
 class init_viewer_module():
-    def __init__(self,y_locations,y_labels,x_start,x_end,Fq,figsize=(12,9)):
-        fig, ax = plt.subplots(figsize=figsize)
-
+    def __init__(self,ax,y_locations,y_labels,x_start,x_end,Fq):
         # init empty lines 
         self.y_locations=y_locations
-        self.fig = fig
-        self.ax = ax 
         self.channel_lines = []
+        # add the lines
         for y_label,y_location in zip(y_labels,y_locations):
             line, = add_empty_line(ax,x_start=x_start,x_end=x_end,y=y_location,Fq = Fq)
             self.channel_lines.append(line)
-
-        # add the scale
         # set y axis ticks
         ax.set_yticks(y_locations,y_labels)
-        # ax.plot((5.25,5.25),(y_locations[0]+100,y_locations[-1]-100),'r','---',linewidth=0.5)
-        # ax.plot((4.75,4.75),(y_locations[0]+100,y_locations[-1]-100),'r','---',linewidth=0.5)
+
+
+class init_overview_module():
+    def __init__(self,data={}):
+        for key, value in data.items():
+            setattr(self, key, value)
+        self.idx = -1
+    
+    def next(self):
+        self.idx+=1
+    def prev(self):
+        self.idx-=1
+
+    def get(self,key):
+        return getattr(self, key)[self.idx]
 
 class init_event_module():
-    def __init__(self,path_events,list_events, signal_start = 2.5, signal_end = 12.5,Fq=128):
-        self.path_event = path_events
-        self.list_events = list_events
-        self.idx = -1
+    def __init__(self,signal_start = 2.5, signal_end = 12.5,Fq=128):
         self.signal_start = signal_start
         self.signal_end = signal_end
         self.Fq=Fq
 
-    def load_event(self):
-        event_file = self.list_events[self.idx]
-        signal = np.load(self.path_event+event_file+'.npy')
+    def load_event(self,path_event):
+        signal = np.load(path_event)
         signal = signal[:19,int(self.signal_start*self.Fq):int(self.signal_end*self.Fq)]
         return signal   
 
@@ -187,3 +191,13 @@ mgh_psg_mono_channels = ['F3', 'F4', 'C3', 'C4', 'O1', 'O2']
 mgh_psg_avg_montage = ['F3-avg', 'F4-avg', 'C3-avg', 'C4-avg', 'O1-avg', 'O2-avg']
 mgh_psg_bipolar_montage = ['F3-C3','C3-O1','F4-C4','C4-O2']
 
+
+CDAC_monopolar_montage = ['Fp1','F3','C3','P3','F7','T3','T5','O1', 'Fz','Cz','Pz', 'Fp2','F4','C4','P4','F8','T4','T6','O2']
+
+CDAC_bipolar_montage = ['Fp1-F7', 'F7-T3', 'T3-T5', 'T5-O1', 
+                             'Fp2-F8', 'F8-T4', 'T4-T6', 'T6-O2', 
+                             'Fp1-F3', 'F3-C3', 'C3-P3', 'P3-O1', 
+                             'Fp2-F4', 'F4-C4', 'C4-P4', 'P4-O2', 
+                             'Fz-Cz', 'Cz-Pz']
+
+mgh_psg_bipolar_montage = ['F3-C3','C3-O1','F4-C4','C4-O2']

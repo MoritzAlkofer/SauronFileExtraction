@@ -1,2 +1,1 @@
-sudo s3fs -o use_cache=/tmp/s3_cache -o allow_other bdsp-opendata-staging /home/ubuntu/SauronFileExtraction/bdsp/staging -o passwd_file=~/.passwd-s3fs-staging -o umask=000
 sudo s3fs -o use_cache=/tmp/s3_cache -o allow_other bdsp-opendata-repository /home/ubuntu/SauronFileExtraction/bdsp/opendata -o passwd_file=~/.passwd-s3fs -o umask=222

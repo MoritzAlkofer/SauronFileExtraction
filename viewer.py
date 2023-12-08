@@ -1,183 +1,119 @@
-import numpy as np
+from viewer import *
+# from utils import *
 import matplotlib.pyplot as plt
+import argparse
+from tqdm import tqdm
 
-def add_empty_line(ax,x_start,x_end,y,Fq):
-    n_points = int((x_end-x_start)*Fq)
-    return ax.plot((np.linspace(x_start,x_end,n_points)),([y]*n_points),'black',linewidth=0.7)
+# plt.switch_backend('TkAgg')  
 
-def add_scale(ax,x_start,x_end,y_start,y_end,x_label,y_label):
-    # plot a scale on the ax object, going from x start to end and y start to end, with respective labels
-    ax.plot((x_start,x_start),(y_start,y_end),'r')
-    ax.text(x_start,y_end-40,y_label,c='r')
-    ax.plot((x_start,x_end),(y_start,y_start),'r',)
-    ax.text(x_end+0.1,y_start,x_label,c='r')
+bipolar_montage = init_montage_class(storage_channels = CDAC_monopolar_montage,
+                                     montage_channels = CDAC_bipolar_montage+['None'],
+                                     y_locations = -100*np.array([ 0,  1,  2,  3,
+                                                                5,  6,  7,  8,
+                                                                10, 11, 12, 13,
+                                                                15, 16, 17, 18,
+                                                                20, 21, 22]),
+                                     y_labels = CDAC_bipolar_montage+[None]
+                                     )
+                                     
+avg_montage = init_montage_class(storage_channels = CDAC_monopolar_montage,
+                                     montage_channels = [c+'-avg' for c in CDAC_monopolar_montage],
+                                     y_locations = -100*np.array([ 0,  1,  2,  3, 4, 5,  6,  7,
+                                                                   9,  10, 11,  
+                                                                   13, 14, 15, 16, 17, 18, 19, 20]),
+                                     y_labels = [channel+'-avg' for channel in CDAC_monopolar_montage]
+                                     )
 
-class init_transforms():
-    def __init__(self,transforms={}):
-        self.transforms = transforms
-    def __call__(self,signal):
-        for transform in self.transforms:
-            signal = self.transforms[transform](signal)
-        return signal
+action_list = {
+    '1': lambda: (change_montage(ax,viewer_module=viewer_module,montage_module=montage_module),refresh_wrapped()),
+    '+': lambda: (scaling_module.increase(),scale_module.increase_y_scale(),refresh_wrapped()),
+    '-': lambda: (scaling_module.decrease(),scale_module.decrease_y_scale(),refresh_wrapped()),
+    'right': lambda: (om.next(),refresh_wrapped()),
+    'left': lambda: (om.prev(),refresh_wrapped()),
+    'p': lambda:(fig.savefig(os.path.join(om.path_save,om.savenames[om.idx])))
+    # More entries...
+    }
 
-class init_montage_class():
-    def __init__(self,view,views_list,storage_channels,montage_channels,montage):
-        self.view = view
-        self.views_list = views_list
-        print(f'the following views are available: {views_list.keys()}')
-        self.montage_channels = montage_channels
-        self.montage = montage
+def refresh(ax,overview_module,event_module,montage_module,scaling_module,viewer_module):
+    path_event = om.path_files[om.idx]
     
-    def __call__(self,signal):
-        signal = self.montage(signal)
-
-        keeper_indices = np.array([self.montage_channels.index(channel) for channel in self.views_list[self.view]])        
-        output = np.zeros_like(signal)
-        output[keeper_indices,:] = signal[keeper_indices,:]
-
-        return output
-
-def update_channels_with_signal(signal,channel_lines,y_locations):
-    for i,line in enumerate(channel_lines):
-        y_location = y_locations[i]
-        data = signal[i,:]+y_location
-        line.set_ydata(data)
-
-def action_function(event,action_list, event_loader, montage_module, title_loader, viewer_module):
-    action = action_list.get(event.key)
-    action()
-
-def change_view(viewer_module,event_loader,montage_module,title_loader,view):
-    montage_module.view=view
-    refresh(event_loader=event_loader,
-            montage_module=montage_module,
-            viewer_module=viewer_module,
-            title_loader=title_loader)
-
-def change_event_and_title(viewer_module,event_loader,title_loader,montage_module,increment):
-    event_loader.idx+=increment
-    title_loader.idx+=increment
-    refresh(event_loader=event_loader,
-            montage_module=montage_module,
-            viewer_module=viewer_module,
-            title_loader=title_loader)
-
-def refresh(event_loader,montage_module,viewer_module,title_loader):
-    signal = event_loader.load_event()        
+    signal = event_module.load_event(path_event)  
     signal = montage_module(signal)
+    signal = scaling_module(signal)
     update_channels_with_signal(signal=signal,
                                 channel_lines=viewer_module.channel_lines,
                                 y_locations=viewer_module.y_locations) 
 
-    title = title_loader()
-    viewer_module.ax.set_title(title)
-    viewer_module.fig.tight_layout()
+    title = om.titles[om.idx]
+    ax.set_title(title)
+    fig.tight_layout()
+    plt.draw()
 
-class init_event_loader():
-    def __init__(self,path_events,list_events, signal_start = 2.5, signal_end = 12.5,Fq=128):
-        self.path_event = path_events
-        self.list_events = list_events
-        self.idx = -1
-        self.signal_start = signal_start
-        self.signal_end = signal_end
-        self.Fq=Fq
+if __name__=='__main__':    
 
-    def load_event(self):
-        event_file = self.list_events[self.idx]
-        signal = np.load(self.path_event+event_file+'.npy')
-        signal = signal[:19,int(self.signal_start*self.Fq):int(self.signal_end*self.Fq)]
-        return signal   
+    parser = argparse.ArgumentParser(description='Filter and sort DataFrame based on given criteria.')
+    parser.add_argument('--path_files')
+    parser.add_argument('--path_save',default='figures', help='path for storing images')
+    parser.add_argument('--save',action='store_true')
 
 
+    args = parser.parse_args()
 
-class init_viewer_module():
-    def __init__(self,y_locations,y_labels,x_start,x_end,Fq,figsize=(10,7)):
-        fig, ax = plt.subplots(figsize=figsize)
+    path_files = args.path_files
+    
+    path_signals = 'test' 
+    path_save=args.path_save
 
-        # init empty lines 
-        self.y_locations=y_locations
-        self.fig = fig
-        self.ax = ax 
-        self.channel_lines = []
-        for y_label,y_location in zip(y_labels,y_locations):
-            line, = add_empty_line(ax,x_start=x_start,x_end=x_end,y=y_location,Fq = Fq)
-            self.channel_lines.append(line)
+    list_files = [f.replace('.npy','') for f in os.listdir(path_files)]
+    list_events = [os.path.join(path_signals,f+'.npy') for f in list_files]
+    list_titles = list_files    
+    list_savenames = [f+'.png' for f in list_files]
 
-        # add the scale
-        add_scale(ax,x_start=0.5,x_end=1.5,y_start=0,y_end=-100,x_label='1s',y_label='100 ms')
+    x_start = 0
+    x_end = 15
+    signal_start=0
+    signal_end=15
+    Fq = 128
+    i = 0
+    figsize = (12,9)
 
-        # set y axis ticks
-        ax.set_yticks(y_locations,y_labels)
-        ax.plot((5.25,5.25),(y_locations[0]+100,y_locations[-1]-100),'r','---',linewidth=0.5)
-        ax.plot((4.75,4.75),(y_locations[0]+100,y_locations[-1]-100),'r','---',linewidth=0.5)
+    # init the overview module
+    om = init_overview_module(data={'path_files':list_events,
+                                    'titles':list_titles,
+                                    'path_save':path_save,
+                                    'savenames': list_savenames})
 
-class build_montage():
-    # this version can also convert cdac monopolar montage into mgh_psg monopolar montage
-    def __init__(self,montage_channels,storage_channels,echo=True):
+    # init the montage module
+    montage_module = init_montage_module(montages= [avg_montage,bipolar_montage])#+localized_montages)
+    event_module= init_event_module(signal_start=signal_start, signal_end=signal_end,Fq=Fq)
+    scaling_module = init_scaling_module(scaling_factor=1)
+
+    # for each view, add a view to the subplot
+    fig, ax = plt.subplots(1,1,figsize=figsize)
+    y_labels = montage_module.montage.y_labels
+    y_locations =montage_module.montage.y_locations
+    ax.set_ylim([y_locations[-1]-100,y_locations[0]+100])
+    viewer_module = init_viewer_module(ax=ax,x_start=x_start,x_end=x_end,y_labels=y_labels,Fq=Fq,y_locations=y_locations)
+    scale_module = init_scale_module(ax)
+    ax.set_xlim([0,15])
+
+    # add some general axis specifications
+    ax.set_xlabel('time [s]')
+
+    # define the refresh function
+    refresh_wrapped = lambda: refresh(ax=ax,
+                                  overview_module=om,
+                                  event_module=event_module,
+                                  montage_module=montage_module,
+                                  viewer_module=viewer_module,
+                                  scaling_module=scaling_module)
+
+    # connect the action function
+    fig.canvas.mpl_connect('key_press_event',lambda event: action_list[event.key]())
+    
+    # if desired, save all files
+    if args.save:
+        for i in tqdm(range(len(om.path_files))):
+            om.next(),refresh_wrapped(),fig.savefig(os.path.join(om.path_save,om.savenames[om.idx]))
         
-        # AVERAGE MONTAGE
-        # get list of all channels that should be displayed in average montage
-        avg_channels = [channel for channel in montage_channels if 'avg' in channel]
-        # get ids of channels 
-
-        self.avg_ids = np.array([storage_channels.index(channel.replace('-avg','')) for channel in avg_channels])
-
-        # BIPOLAR MONTAGE
-        # get list of all channels that should be displayed in average montage
-        bipolar_channels = [channel for channel in montage_channels if ('avg' not in channel)&('-' in channel)]
-        # get ids of channels 
-        self.bipolar_ids = np.array([[storage_channels.index(channel.split('-')[0]), storage_channels.index(channel.split('-')[1])] for channel in bipolar_channels])
-    
-        # conversion
-        # get list of all channels that should be displayed in average montage
-        monopolar_channels = [channel for channel in montage_channels if ('avg' not in channel) and ('-' not in channel)]
-        # get ids of channels 
-        self.monopolar_ids = np.array([storage_channels.index(channel) for channel in monopolar_channels])
-    
-        if echo: print('storage channels: '+str(storage_channels))
-        if echo: print('montage channels: '+str(avg_channels+bipolar_channels+monopolar_channels))
-
-    def __call__(self,signal):
-        signals = []
-        # AVERAGE MONTAGE
-        # get average of these signals along time axis
-        if len(self.avg_ids>0):
-            avg_signal = signal[self.avg_ids].mean(axis=0).squeeze()
-            # substract average from original signal
-            avg_montaged_signal = signal[self.avg_ids] - avg_signal
-            signals.append(avg_montaged_signal)
-        if len(self.bipolar_ids)>0:
-            # BIPOLAR MONTAGE
-            bipolar_montaged_signal = signal[self.bipolar_ids[:,0]] - signal[self.bipolar_ids[:,1]]
-            signals.append(bipolar_montaged_signal)
-        if len(self.monopolar_ids>0):
-            # add monopolar channels
-            signals.append(signal[self.monopolar_ids])
-
-        signal = np.concatenate(signals)
-        return signal
-
-class init_title_loader_SauronEvent():
-    def __init__(self,HashFolderNames,Classes,Annotations):
-        self.HashFolderNames = HashFolderNames
-        self.Classes = Classes
-        self.Annotations = Annotations
-        self.idx = -1
-
-    def __call__(self):
-        idx = self.idx
-        title = 'HashFoldername: '+self.HashFolderNames[idx]+'\n Classes: '+self.Classes[idx]+'\n Annotations: '+self.Annotations[idx]+'\n'
-        return title 
-
-class init_title_loader_ChannelDeletionEval():
-    def __init__(self,df):
-        self.df = df
-        self.idx = -1
-
-    def __call__(self):
-        title = self.df.iloc[self.idx]['event_file']+'\n'
-        title = title+f'rater prediction: {self.df.iloc[self.idx]["fraction_of_yes"]:.2f}'+'\n\n'
-        for channelLocation in ['frontalChannels','centralChannels', 'parietalChannels', 'occipitalChannels','temporalChannels']: 
-            pred = self.df.iloc[self.idx][channelLocation]
-            title = title + channelLocation +f': {pred:.2f}' + '\n'        
-        return title
+    plt.show()
