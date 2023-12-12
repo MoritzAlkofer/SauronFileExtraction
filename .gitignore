@@ -9,5 +9,7 @@ test
 SauronData/
 venv/
 tables_with_relative_time/
-files_batch_2/
+batch*/
 missing.xlsx
+batch2.h5
+data/batch3.h5

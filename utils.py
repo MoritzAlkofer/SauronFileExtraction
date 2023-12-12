@@ -1,3 +1,6 @@
+from datetime import datetime
+import numpy as np
+
 def get_time_from_filename(filename):
     # filename in format blabla_y,m,d_h,m,s.mat
     # returns timestamp obect
