@@ -206,3 +206,185 @@ event is allnan 112520743_ses-1_3
 event is allnan 114679578_ses-1_2
 event is allnan 114679578_ses-1_6
 event is allnan 118969771_ses-1_4
+event is allnan 121733541_ses-1_2
+event is allnan 121733541_ses-1_3
+event is allnan 121733541_ses-1_4
+event is allnan 121733541_ses-1_5
+event is allnan 112338465_ses-1_3
+event is allnan 112338465_ses-1_4
+event is allnan 112338465_ses-1_5
+event is allnan 120602998_ses-6_0
+event is allnan 120602998_ses-8_0
+More than one .edf in: sub-S0001115093882 ses-1
+event is allnan 115093882_ses-2_4
+event is allnan 114906741_ses-1_3
+event is allnan 114906741_ses-2_3
+edf not readable bdsp/opendata/EEG/bids/sub-S0001114833329/ses-9/eeg/sub-S0001114833329_ses-9_task-cEEG_eeg.edf
+event is allnan 114485226_ses-3_2
+event is allnan 121088689_ses-4_0
+event is allnan 121604697_ses-4_0
+event is allnan 116109793_ses-9_2
+event is allnan 116109793_ses-9_4
+event is allnan 121656371_ses-6_4
+event is allnan 121656371_ses-6_6
+event is allnan 121656371_ses-7_2
+event is allnan 121656371_ses-7_5
+event is allnan 121656371_ses-7_6
+event is allnan 114458320_ses-10_0
+event is allnan 114458320_ses-11_0
+event is allnan 114458320_ses-11_6
+event is allnan 114458320_ses-12_0
+event is allnan 114458320_ses-3_4
+event is allnan 114458320_ses-3_5
+event is allnan 114458320_ses-4_4
+event is allnan 114458320_ses-4_5
+event is allnan 114458320_ses-8_0
+event is allnan 114458320_ses-9_0
+event is allnan 117347646_ses-18_4
+event is allnan 117347646_ses-18_5
+More than one .edf in: sub-S0001117347646 ses-20
+event is allnan 117347646_ses-7_5
+event is allnan 117347646_ses-8_5
+event is allnan 117347646_ses-9_5
+event is allnan 113797450_ses-11_5
+event is allnan 113797450_ses-12_5
+More than one .edf in: sub-S0001113234096 ses-2
+event is allnan 115784561_ses-1_2
+event is allnan 115784561_ses-1_4
+event is allnan 115784561_ses-1_5
+event is allnan 111553371_ses-1_4
+event is allnan 122155782_ses-1_4
+More than one .edf in: sub-S0001112637048 ses-2
+More than one .edf in: sub-S0001121784641 ses-1
+event is allnan 117724607_ses-1_2
+event is allnan 117724607_ses-2_2
+event is allnan 114530502_ses-2_4
+event is allnan 114530502_ses-6_1
+event is allnan 114530502_ses-6_2
+event is allnan 114530502_ses-6_4
+event is allnan 114530502_ses-6_5
+event is allnan 114530502_ses-6_6
+event is allnan 119126222_ses-12_3
+event is allnan 119126222_ses-14_0
+event is allnan 118100146_ses-2_2
+event is allnan 118100146_ses-2_4
+event is allnan 122005924_ses-1_4
+event is allnan 118133859_ses-15_0
+event is allnan 116711869_ses-33_-6337
+event is allnan 115536311_ses-4_3
+event is allnan 119808376_ses-1_3
+event is allnan 119808376_ses-1_4
+event is allnan 119808376_ses-2_3
+event is allnan 119808376_ses-2_4
+event is allnan 119808376_ses-4_0
+event is allnan 120561692_ses-10_0
+event is allnan 120561692_ses-11_0
+event is allnan 120561692_ses-19_2
+event is allnan 120561692_ses-20_2
+event is allnan 120561692_ses-25_0
+edf not readable bdsp/opendata/EEG/bids/sub-S0001112735104/ses-7/eeg/sub-S0001112735104_ses-7_task-cEEG_eeg.edf
+event is allnan 112735104_ses-8_0
+event is allnan 112735104_ses-8_3
+event is allnan 114286303_ses-21_0
+event is allnan 114286303_ses-22_0
+event is allnan 114286303_ses-23_0
+event is allnan 114286303_ses-24_0
+More than one .edf in: sub-S0001112347284 ses-21
+event is allnan 112347284_ses-22_6
+More than one .edf in: sub-S0001112347284 ses-31
+event is allnan 111610450_ses-1_3
+event is allnan 119439376_ses-1_5
+event is allnan 115575074_ses-1_4
+event is allnan 117190380_ses-1_2
+event is allnan 117190380_ses-1_3
+More than one .edf in: sub-S0001115302141 ses-1
+event is allnan 120064211_ses-1_6
+More than one .edf in: sub-S0001111646709 ses-2
+event is allnan 120648534_ses-1_3
+event is allnan 120648534_ses-1_5
+event is allnan 117470808_ses-1_3
+More than one .edf in: sub-S0001112999878 ses-1
+More than one .edf in: sub-S0001112999878 ses-2
+More than one .edf in: sub-S0001122203746 ses-3
+More than one .edf in: sub-S0001122203746 ses-5
+More than one .edf in: sub-S0001117000665 ses-16
+More than one .edf in: sub-S0001114218141 ses-6
+event is allnan 115174546_ses-10_3
+event is allnan 115174546_ses-12_2
+event is allnan 115174546_ses-1_3
+event is allnan 115174546_ses-9_3
+event is allnan 122449813_ses-12_5
+event is allnan 113292203_ses-10_0
+event is allnan 113292203_ses-10_1
+event is allnan 113292203_ses-10_5
+event is allnan 113632025_ses-1_1
+event is allnan 113632025_ses-1_3
+event is allnan 113632025_ses-2_1
+event is allnan 113632025_ses-2_3
+event is allnan 113632025_ses-3_3
+event is allnan 113632025_ses-3_6
+event is allnan 112617703_ses-7_2
+event is allnan 112617703_ses-8_2
+More than one .edf in: sub-S0001121243061 ses-11
+More than one .edf in: sub-S0001121243061 ses-2
+More than one .edf in: sub-S0001121243061 ses-6
+event is allnan 118426095_ses-11_2
+event is allnan 118426095_ses-12_2
+event is allnan 118426095_ses-18_2
+event is allnan 118426095_ses-18_3
+event is allnan 118426095_ses-18_5
+event is allnan 118426095_ses-19_2
+event is allnan 118426095_ses-19_3
+event is allnan 118426095_ses-19_5
+edf not readable bdsp/opendata/EEG/bids/sub-S0001116795791/ses-10/eeg/sub-S0001116795791_ses-10_task-cEEG_eeg.edf
+event is allnan 116795791_ses-18_2
+event is allnan 116795791_ses-29_3
+event is allnan 116795791_ses-29_4
+event is allnan 116795791_ses-34_1
+event is allnan 116795791_ses-34_2
+event is allnan 116795791_ses-34_3
+event is allnan 116795791_ses-34_5
+event is allnan 116795791_ses-34_6
+event is allnan 116795791_ses-7_3
+event is allnan 116795791_ses-7_5
+event is allnan 116795791_ses-7_6
+event is allnan 116795791_ses-8_3
+event is allnan 116795791_ses-8_5
+event is allnan 116795791_ses-8_6
+not all channels present bdsp/opendata/EEG/bids/sub-S0001115061206/ses-2/eeg/sub-S0001115061206_ses-2_task-OR_eeg.edf
+More than one .edf in: sub-S0001118981947 ses-1
+More than one .edf in: sub-S0001118981947 ses-2
+More than one .edf in: sub-S0001118981947 ses-3
+More than one .edf in: sub-S0001118981947 ses-9
+not all channels present bdsp/opendata/EEG/bids/sub-S0001119853658/ses-10/eeg/sub-S0001119853658_ses-10_task-cEEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0001119853658/ses-11/eeg/sub-S0001119853658_ses-11_task-cEEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0001119853658/ses-2/eeg/sub-S0001119853658_ses-2_task-cEEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0001119853658/ses-3/eeg/sub-S0001119853658_ses-3_task-cEEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0001119853658/ses-4/eeg/sub-S0001119853658_ses-4_task-cEEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0001119853658/ses-5/eeg/sub-S0001119853658_ses-5_task-cEEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0001119853658/ses-6/eeg/sub-S0001119853658_ses-6_task-cEEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0001119853658/ses-7/eeg/sub-S0001119853658_ses-7_task-cEEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0001119853658/ses-8/eeg/sub-S0001119853658_ses-8_task-cEEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0001119853658/ses-9/eeg/sub-S0001119853658_ses-9_task-cEEG_eeg.edf
+edf not readable bdsp/opendata/EEG/bids/sub-S0002115051260/ses-3/eeg/sub-S0002115051260_ses-3_task-rEEG_eeg.edf
+event is allnan 117647630_ses-2_1
+event is allnan 117647630_ses-2_2
+event is allnan 117647630_ses-2_3
+event is allnan 117647630_ses-2_4
+event is allnan 114431672_ses-2_3
+event is allnan 114431672_ses-2_6
+not all channels present bdsp/opendata/EEG/bids/sub-S0002112013508/ses-1/eeg/sub-S0002112013508_ses-1_task-EEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0002112013508/ses-2/eeg/sub-S0002112013508_ses-2_task-EEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0002112013508/ses-3/eeg/sub-S0002112013508_ses-3_task-EEG_eeg.edf
+not all channels present bdsp/opendata/EEG/bids/sub-S0002112013508/ses-4/eeg/sub-S0002112013508_ses-4_task-EEG_eeg.edf
+event is allnan 112013508_ses-6_3
+event is allnan 112013508_ses-9_3
+event is allnan 112427380_ses-1_3
+event is allnan 112427380_ses-4_6
+event is allnan 112427380_ses-5_6
+More than one .edf in: sub-S0001116554567 ses-10
+More than one .edf in: sub-S0001116554567 ses-11
+More than one .edf in: sub-S0001116554567 ses-12
+More than one .edf in: sub-S0001116554567 ses-6
+More than one .edf in: sub-S0001116554567 ses-8
+More than one .edf in: sub-S0001116554567 ses-9

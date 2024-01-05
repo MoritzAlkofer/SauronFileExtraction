@@ -1,0 +1,6 @@
+event is allnan 116546297_ses-1_2
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0001115195139/ses-1/eeg/sub-S0001115195139_ses-1_task-rEEG_eeg.edf
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0001115195139/ses-1/eeg/sub-S0001115195139_ses-1_task-rEEG_eeg.edf
+event is allnan 111306219_ses-1_1
+event is allnan 111306219_ses-1_6
+event is allnan 119730624_ses-1_4
