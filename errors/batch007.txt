@@ -4,3 +4,27 @@ timestamp outside of file bdsp/opendata/EEG/bids/sub-S0001115195139/ses-1/eeg/su
 event is allnan 111306219_ses-1_1
 event is allnan 111306219_ses-1_6
 event is allnan 119730624_ses-1_4
+event is allnan 121426303_ses-2_0
+event is allnan 121426303_ses-2_2
+event is allnan 121426303_ses-2_3
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0002118857222/ses-5/eeg/sub-S0002118857222_ses-5_task-EMU_eeg.edf
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0002118857222/ses-5/eeg/sub-S0002118857222_ses-5_task-EMU_eeg.edf
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0002118857222/ses-5/eeg/sub-S0002118857222_ses-5_task-EMU_eeg.edf
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0002118857222/ses-5/eeg/sub-S0002118857222_ses-5_task-EMU_eeg.edf
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0002118857222/ses-5/eeg/sub-S0002118857222_ses-5_task-EMU_eeg.edf
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0002118857222/ses-5/eeg/sub-S0002118857222_ses-5_task-EMU_eeg.edf
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0002118857222/ses-5/eeg/sub-S0002118857222_ses-5_task-EMU_eeg.edf
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0002118857222/ses-5/eeg/sub-S0002118857222_ses-5_task-EMU_eeg.edf
+timestamp outside of file bdsp/opendata/EEG/bids/sub-S0002118857222/ses-5/eeg/sub-S0002118857222_ses-5_task-EMU_eeg.edf
+More than one .edf in: sub-S0001113803786 ses-1
+event is allnan 113803786_ses-2_6
+event is allnan 117679846_ses-1_1
+event is allnan 117582869_ses-2_1
+event is allnan 117582869_ses-2_4
+event is allnan 117582869_ses-2_5
+event is allnan 117582869_ses-2_6
+event is allnan 113145853_ses-3_6
+event is allnan 118230876_ses-5_0
+More than one .edf in: sub-S0001115340262 ses-3
+event is allnan 118337526_ses-19_6
+event is allnan 118337526_ses-20_6

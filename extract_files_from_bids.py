@@ -86,8 +86,12 @@ def get_data_from_edf(edf, desired_channels, timestamp, windowsize):
     else:
         ecg_data = np.empty(n)
     # list ecg to fix dimensionality
-    data = np.concatenate([eeg_data, [ecg_data]], axis=0)
-    return data
+    try:
+        data = np.concatenate([eeg_data, [ecg_data]], axis=0)
+        return data
+    except
+        write_to_error(path_error, message='concatenation failed ' + path_edf)
+        return np.empty(n)
 
 def clear_cache():
     if os.path.isdir('/tmp/s3_cache/'):
