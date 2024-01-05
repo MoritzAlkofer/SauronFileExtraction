@@ -89,7 +89,7 @@ def get_data_from_edf(edf, desired_channels, timestamp, windowsize):
     try:
         data = np.concatenate([eeg_data, [ecg_data]], axis=0)
         return data
-    except
+    except:
         write_to_error(path_error, message='concatenation failed ' + path_edf)
         return np.empty(n)
 
