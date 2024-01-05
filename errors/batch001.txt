@@ -191,3 +191,18 @@ More than one .edf in: sub-S0001116554567 ses-12
 More than one .edf in: sub-S0001116554567 ses-6
 More than one .edf in: sub-S0001116554567 ses-8
 More than one .edf in: sub-S0001116554567 ses-9
+edf not readable bdsp/opendata/EEG/bids/sub-S0002121794103/ses-1/eeg/sub-S0002121794103_ses-1_task-rEEG_eeg.edf
+event is allnan 112357990_ses-1_1
+event is allnan 112357990_ses-1_2
+event is allnan 112357990_ses-1_3
+event is allnan 112357990_ses-1_4
+event is allnan 112357990_ses-1_5
+event is allnan 118526563_ses-1_2
+event is allnan 118526563_ses-1_4
+event is allnan 118038542_ses-1_2
+not all channels present bdsp/opendata/EEG/bids/sub-S0001116963267/ses-1/eeg/sub-S0001116963267_ses-1_task-OR_eeg.edf
+More than one .edf in: sub-S0001116963267 ses-2
+event is allnan 112520743_ses-1_3
+event is allnan 114679578_ses-1_2
+event is allnan 114679578_ses-1_6
+event is allnan 118969771_ses-1_4
