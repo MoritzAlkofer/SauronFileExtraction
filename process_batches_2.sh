@@ -33,7 +33,7 @@ for batch in "${batches[@]}"; do
         # Change ownership of the .h5 file to the current user
         sudo chown "$current_user" "data/${batch}.h5"
         # Upload the .h5 file to Dropbox
-        rclone copy "data/${batch}.h5" dropbox_moritz:Sauron/data/
+        rclone copy "data/${batch}.h5" dropbox_moritz:Sauron/data/ --progress
 
         # Check if the upload was successful
         if [ $? -eq 0 ]; then
