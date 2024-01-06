@@ -85,13 +85,16 @@ def get_data_from_edf(edf, desired_channels, timestamp, windowsize):
         ecg_data = edf.readSignal(labels.index('EKG'), start, n)
     else:
         ecg_data = np.empty(n)
+        ecg_data[:] = np.nan
     # list ecg to fix dimensionality
     try:
         data = np.concatenate([eeg_data, [ecg_data]], axis=0)
         return data
     except:
-        write_to_error(path_error, message='concatenation failed ' + path_edf)
-        return np.empty(n)
+        write_to_error(path_error, message=f'concatenation failed  {path_edf} at {timestamp}')
+        data = np.empty(n)
+        data[:] = np.nan
+        return data
 
 def clear_cache():
     if os.path.isdir('/tmp/s3_cache/'):
@@ -104,8 +107,11 @@ def process_edf(path_edf,path_save, desired_channels, timestamps, windowsize):
     with EdfReader(path_edf) as edf:
         for timestamp in tqdm(timestamps,leave=False):
             if edf.file_duration - timestamp - windowsize < 0:
-                write_to_error(path_error, message='timestamp outside of file ' + path_edf)
-                continue 
+                write_to_error(path_error, message=f'timestamp outside of file +{path_df} at {timestamp}')
+                continue
+            if timestamp - windowsize < 0:
+                write_to_error(path_error, message=f'timestamp outside of file +{path_df} at {timestamp}')
+                continue
             signal = get_data_from_edf(edf, desired_channels, timestamp, windowsize)
             save_name = get_save_name(bdsp_patient_id,ses,timestamp)
             if signal_check(signal,save_name) == True:
