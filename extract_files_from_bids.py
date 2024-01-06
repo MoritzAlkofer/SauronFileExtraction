@@ -107,10 +107,10 @@ def process_edf(path_edf,path_save, desired_channels, timestamps, windowsize):
     with EdfReader(path_edf) as edf:
         for timestamp in tqdm(timestamps,leave=False):
             if edf.file_duration - timestamp - windowsize < 0:
-                write_to_error(path_error, message=f'timestamp outside of file +{path_df} at {timestamp}')
+                write_to_error(path_error, message=f'timestamp outside of file +{path_edf} at {timestamp}')
                 continue
             if timestamp - windowsize < 0:
-                write_to_error(path_error, message=f'timestamp outside of file +{path_df} at {timestamp}')
+                write_to_error(path_error, message=f'timestamp outside of file +{path_edf} at {timestamp}')
                 continue
             signal = get_data_from_edf(edf, desired_channels, timestamp, windowsize)
             save_name = get_save_name(bdsp_patient_id,ses,timestamp)
